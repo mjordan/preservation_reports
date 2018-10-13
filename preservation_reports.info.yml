@@ -1,0 +1,7 @@
+name: 'Preservation Reports'
+description: "Provides reports elevant to preservation of resources managed in Islandora"
+type: module
+package: islandora
+core: 8.x
+dependencies:
+  - search_api

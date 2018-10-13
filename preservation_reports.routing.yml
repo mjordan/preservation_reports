@@ -1,0 +1,7 @@
+preservation_reports.reports:
+  path: '/admin/reports/preservation_reports'
+  defaults:
+    _controller: '\Drupal\preservation_reports\Controller\ReportsController::reports'
+    _title: 'Preservation reports'
+  requirements:
+    _permission: 'access site reports'

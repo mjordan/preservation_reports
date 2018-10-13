@@ -1,0 +1,5 @@
+preservation_reports.reports:
+  title: 'Preservation reports'
+  parent: system.admin_reports
+  description: 'Get reports relevant to preservation of resources managed by Islandora.'
+  route_name: preservation_reports.reports
