@@ -15,7 +15,9 @@ class ReportsController extends ControllerBase {
    */
    public function reports() {
      return [
-       '#markup' => $this->t('First chart/table goes here.')
+       '#theme' => 'preservation_reports_chart',
+       '#chart' => TRUE,
+       '#heading' => "Sample chart showing relative percentages of Preservation Master MIME types",
      ];
    }
 }

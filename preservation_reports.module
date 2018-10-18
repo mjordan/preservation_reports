@@ -1,0 +1,44 @@
+<?php
+
+/**
+* Implements hook_theme().
+*/
+function preservation_reports_theme($existing, $type, $theme, $path) {
+  return [
+    'preservation_reports_chart' => [
+      'variables' => ['chart' => NULL, 'heading' => NULL],
+    ],
+  ];
+}
+
+/**
+* Default preprocessor function for the preservation_report theme hook.
+*/
+function template_preprocess_preservation_reports_chart(&$variables) {
+  $variables['attributes'] = [
+    'id' => ['preservation_reports_chart'],
+  ];
+}
+
+/**
+* Implements hook_page_attachments().
+*/
+function preservation_reports_page_attachments(array &$attachments) {
+  if (\Drupal::routeMatch()->getRouteName() == 'preservation_reports.reports') {
+    $attachments['#attached']['library'][] = 'preservation_reports/chartjs';
+    $attachments['#attached']['library'][] = 'preservation_reports/preservation_reports';
+
+    // @todo: Add services to get our data...
+
+    // For now we use dummy data to render the sample chart.
+    $labels = array('image/tiff', 'video/mpeg', 'audio/mpeg');
+    $datasets = new StdClass();
+    $datasets->data = array(60, 20, 30);
+    $datasets->backgroundColor = array('rgba(255, 99, 132)', 'rgba(54, 162, 235)', 'rgba(255, 206, 86)');
+    $chart_data = array(
+      'labels' => $labels,
+      'datasets' =>  array($datasets),
+    );
+    $attachments['#attached']['drupalSettings']['preservation_reports']['chart_data'] = $chart_data;
+  }
+}

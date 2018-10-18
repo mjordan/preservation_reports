@@ -1,0 +1,13 @@
+# For now we use Chart.js from a CDN. When https://www.drupal.org/project/charts
+# comes out of beta, we should switch to it.
+preservation_reports:
+  version: 1.x
+  js:
+    js/preservation_reports.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+chartjs:
+  version: 1.x
+  js:
+    https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js: { type: external }
