@@ -16,14 +16,12 @@ Intended functionality is to get this data (and other types of "preservation" da
 
 * [Islandora](https://github.com/Islandora-CLAW/islandora) a.k.a. CLAW
 
-Uses the [Chart.js Javascript library](http://www.chartjs.org/) for now. Chart.js is not a local requirement, since it is called from a CDN.
-
-We should probably use the [Charts](https://www.drupal.org/project/charts) contrib module once it moves out of beta for Drupal 8.
+Uses the [Chart.js Javascript library](http://www.chartjs.org/) for now. Chart.js is not a local requirement, since it is called from a CDN. We should probably use the [Charts](https://www.drupal.org/project/charts) contrib module once it moves out of beta for Drupal 8.
 
 ## Installation
 
 1. Clone this repo into your Islandora's `drupal/web/modules/contrib` directory.
-1. Enable the module either under the "Admin > Extend" menu or by running `drush en -y islandora_whole_object`.
+1. Enable the module either under the "Admin > Extend" menu or by running `drush en -y preservation_reports`.
 
 ## Maintainers
 
