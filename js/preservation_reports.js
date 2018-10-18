@@ -14,4 +14,8 @@ Javascript that renders a Chart.js chart.
     data: preservationReportsData,
   });
 
+  // Hard-coded size limits, for now.
+  preservationReportsPieChart.canvas.parentNode.style.width = '1000px';
+  preservationReportsPieChart.canvas.parentNode.style.height = '1000px'
+
 }) (Drupal, jQuery);
