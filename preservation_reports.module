@@ -6,7 +6,7 @@
 function preservation_reports_theme($existing, $type, $theme, $path) {
   return [
     'preservation_reports_chart' => [
-      'variables' => ['chart' => NULL, 'heading' => NULL],
+      'variables' => ['chart' => NULL, 'pieheading' => NULL, 'lineheading' => NULL],
     ],
   ];
 }
@@ -16,7 +16,7 @@ function preservation_reports_theme($existing, $type, $theme, $path) {
 */
 function template_preprocess_preservation_reports_chart(&$variables) {
   $variables['attributes'] = [
-    'id' => ['preservation_reports_chart'],
+    'id' => ['preservation_reports_charts'],
   ];
 }
 
@@ -30,15 +30,25 @@ function preservation_reports_page_attachments(array &$attachments) {
 
     // @todo: Add services to get our data...
 
-    // For now we use dummy data to render the sample chart.
+    // For now we use dummy data to render the sample pie chart.
     $labels = array('image/tiff', 'video/mpeg', 'audio/mpeg');
     $datasets = new StdClass();
     $datasets->data = array(60, 20, 30);
     $datasets->backgroundColor = array('rgba(255, 99, 132)', 'rgba(54, 162, 235)', 'rgba(255, 206, 86)');
-    $chart_data = array(
+    $pie_chart_data = array(
       'labels' => $labels,
       'datasets' =>  array($datasets),
     );
-    $attachments['#attached']['drupalSettings']['preservation_reports']['chart_data'] = $chart_data;
+    $attachments['#attached']['drupalSettings']['preservation_reports']['piechart_data'] = $pie_chart_data;
+
+    // And a dummy line chart.
+    $datasets = new StdClass();
+    $datasets->data = array(1, 3, 10, 0, 0, 0 , 0, 0, 2, 0, 0, 0);
+    $datasets->label = "Fixity check event failures";
+    $line_chart_data = array(
+      'labels' => array('2017-11', '2017-12', '2018-01', '2018-02', '2018-03', '2018-04', '2018-05', '2018-06', '2018-07', '2018-08', '2018-09', '2018-10'),
+      'datasets' => array($datasets),
+    );
+    $attachments['#attached']['drupalSettings']['preservation_reports']['linechart_data'] = $line_chart_data;
   }
 }

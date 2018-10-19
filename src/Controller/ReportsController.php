@@ -17,7 +17,8 @@ class ReportsController extends ControllerBase {
      return [
        '#theme' => 'preservation_reports_chart',
        '#chart' => TRUE,
-       '#heading' => "Sample chart showing relative percentages of Preservation Master MIME types",
+       '#pieheading' => "Sample chart showing relative percentages of Preservation Master MIME types",
+       '#lineheading' => "Sample chart showing fixity check event failures over time",
      ];
    }
 }

@@ -1,6 +1,11 @@
 <div {{ attributes }}>
-  <h3>{{ heading }}</h3>
+  <h3>{{ pieheading }}</h3>
   {% if chart %}
-    <div id="preservation-reports-charts-content"><canvas id="preservation-reports-chart"></canvas></div>
+    <div id="preservation-reports-pie-chart-content"><canvas id="preservation-reports-pie-chart"></canvas></div>
+  {% endif %}
+
+  <h3>{{ lineheading }}</h3>
+  {% if chart %}
+    <div id="preservation-reports-line-chart-content"><canvas id="preservation-reports-line-chart"></canvas></div>
   {% endif %}
 </div>
