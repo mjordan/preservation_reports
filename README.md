@@ -6,15 +6,14 @@ Beginnings of a Drupal 8 module to provide reports relevant to preservation of r
 
 ## Overview
 
-Currently doesn't do anything other than display a couple of sample charts at "Admin > Reports > Preservation reports" generated from dummy data, a pie chart containing dummy data showing relative numbers of Preservation Masters with 'image/tiff', 'video/mpeg', 'audio/mpeg' MIME types:
+Currently doesn't do anything other than display a couple of sample charts at "Admin > Reports > Preservation reports" generated from dummy data:
 
-![Sample pie chart](docs/sample_pie_chart.png)
+1.  a pie chart containing dummy data showing relative numbers of Preservation Masters with 'image/tiff', 'video/mpeg', 'audio/mpeg' MIME types:
+2.  a sample line chart showing fixity check event failures over the last year
 
-and a sample line chart showing fixity check event failures over the last year:
+![Sample charts](docs/sample_charts.png)
 
-![Sample line chart](docs/sample_line_chart.png)
-
-Intended functionality is to get this data (and other types of "preservation" data) from Solr, which implies that the data must be indexed in Solr.
+Intended functionality is to get this data (and other types of "preservation" data) from Solr (which implies that the data must be indexed in Solr), or other sources, such as the [RipRap](https://github.com/mjordan/riprap) fixity microservice.
 
 ## Requirements
 

@@ -14,11 +14,19 @@ Javascript that renders a Chart.js chart.
   var preservationReportsPieChart = new Chart(preservationReportsPieChartCanvas, {
     type: 'pie',
     data: preservationReportsPieChartData,
+    options: {
+      layout: {
+        padding: {
+          top: 50,
+          bottom: 100,
+        }
+      }
+    }
   });
 
   // Hard-coded size limits, for now.
-  preservationReportsPieChart.canvas.parentNode.style.width = '1000px';
-  preservationReportsPieChart.canvas.parentNode.style.height = '1000px'
+  // preservationReportsPieChart.canvas.parentNode.style.width = '1000px';
+  // preservationReportsPieChart.canvas.parentNode.style.height = '1000px'
 
   // For the example line chart.
   var preservationReportsLineChartCanvas = document.getElementById('preservation-reports-line-chart');
