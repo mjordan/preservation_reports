@@ -32,14 +32,22 @@ function preservation_reports_page_attachments(array &$attachments) {
     // for this line chart, query Riprap...
 
     // For now we use dummy data to render the sample pie chart.
-    $labels = array('image/tiff', 'video/mpeg', 'audio/mpeg');
     $dataset = new StdClass();
-    $dataset->data = array(60, 20, 30);
+    // $labels = array('image/tiff', 'video/mpeg', 'audio/mpeg');
+    // $dataset->data = array(60, 20, 30);
+
+    // Live data from Solr. See https://github.com/mjordan/preservation_reports/issues/2
+    // for indexing configurartion.
+    $solr_data = preservation_reports_get_mimetypes();
+    $labels = array_keys($solr_data);
+    $dataset->data = array_values($solr_data);
+
     $dataset->backgroundColor = array('rgba(255, 99, 132)', 'rgba(54, 162, 235)', 'rgba(255, 206, 86)');
     $pie_chart_data = array(
       'labels' => $labels,
       'datasets' =>  array($dataset),
     );
+
     $attachments['#attached']['drupalSettings']['preservation_reports']['piechart_data'] = $pie_chart_data;
 
     // And a dummy line chart.
@@ -55,3 +63,34 @@ function preservation_reports_page_attachments(array &$attachments) {
     $attachments['#attached']['drupalSettings']['preservation_reports']['linechart_data'] = $line_chart_data;
   }
 }
+
+/**
+ * Queries the local Solr to get the number of MIME types for media.
+ *
+ * @todo: Use Drupal's Search API for this.
+ */
+function preservation_reports_get_mimetypes() {
+    // @todo: Limit to Preservation Master File and Original File media, i.e.,
+    // its_field_media_use value of 15 or 16.
+    $solr_query = 'facet.field=ss_field_mime_type&facet=on&q=ss_field_mime_type:*&rows=0';
+    $solr_url = 'http://localhost:8983/solr/CLAW/select?' . $solr_query;
+    $response = \Drupal::httpClient()->get($solr_url);
+    $response_body = (string) $response->getBody();
+    $results = json_decode($response_body, true);
+    $facets = $results['facet_counts']['facet_fields']['ss_field_mime_type'];
+
+    // Convert from a flat list of mime types and frequencies to an associative array.
+    $num_facets = count($facets);
+    $output = array();
+    if ($num_facets % 2 == 0) {
+      $num_pairs = $num_facets / 2;
+      for ($i = 1; $i <= $num_pairs; $i++) {
+        $mime_type = array_shift($facets);
+        $count = array_shift($facets);
+        $output[$mime_type] = $count;
+      }
+    }
+
+    return $output;
+}
+
