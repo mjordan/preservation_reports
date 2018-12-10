@@ -31,8 +31,8 @@ function preservation_reports_page_attachments(array &$attachments) {
     // @todo: Add services to get our data, e.g. for this pie chart, query Solr,
     // for this line chart, query Riprap...
 
-    // For now we use dummy data to render the sample pie chart.
     $dataset = new StdClass();
+    // For now we use dummy data to render the sample pie chart.
     // $labels = array('image/tiff', 'video/mpeg', 'audio/mpeg');
     // $dataset->data = array(60, 20, 30);
 
@@ -47,15 +47,14 @@ function preservation_reports_page_attachments(array &$attachments) {
       'labels' => $labels,
       'datasets' =>  array($dataset),
     );
-
     $attachments['#attached']['drupalSettings']['preservation_reports']['piechart_data'] = $pie_chart_data;
 
     // And a dummy line chart.
     $dataset = new StdClass();
-    $dataset->data = array(1, 3, 10, 0, 0, 0 , 0, 0, 2, 0, 0, 0);
     $dataset->label = "Fixity check event failures";
     $dataset->pointBackgroundColor = 'red';
     $dataset->lineTension = 0;
+    $dataset->data = array(1, 3, 10, 0, 0, 0 , 0, 0, 2, 0, 0, 0);
     $line_chart_data = array(
       'labels' => array('2017-11', '2017-12', '2018-01', '2018-02', '2018-03', '2018-04', '2018-05', '2018-06', '2018-07', '2018-08', '2018-09', '2018-10'),
       'datasets' => array($dataset),
@@ -68,11 +67,12 @@ function preservation_reports_page_attachments(array &$attachments) {
  * Queries the local Solr to get the number of MIME types for media.
  *
  * @todo: Use Drupal's Search API for this.
+ * @todo: 15 and 16 in the filter query below are the taxonomy term IDs for 'Preservation Master File' and 'Original File'.
+ *   Selecting the IDs should be an admin option.
  */
 function preservation_reports_get_mimetypes() {
-    // @todo: Limit to Preservation Master File and Original File media, i.e.,
-    // its_field_media_use value of 15 or 16.
     $solr_query = 'facet.field=ss_field_mime_type&facet=on&q=ss_field_mime_type:*&rows=0';
+    // $solr_query = 'facet.field=ss_field_mime_type&facet=on&fq=its_field_media_use:(15+OR+16)&q=ss_field_mime_type:*&rows=0';
     $solr_url = 'http://localhost:8983/solr/CLAW/select?' . $solr_query;
     $response = \Drupal::httpClient()->get($solr_url);
     $response_body = (string) $response->getBody();
@@ -80,10 +80,12 @@ function preservation_reports_get_mimetypes() {
     $facets = $results['facet_counts']['facet_fields']['ss_field_mime_type'];
 
     // Convert from a flat list of mime types and frequencies to an associative array.
-    $num_facets = count($facets);
     $output = array();
+    $num_facets = count($facets);
     if ($num_facets % 2 == 0) {
       $num_pairs = $num_facets / 2;
+      // For every two members of the array (the mimetype and frequency),
+      // shift them off the source array and add to $output.
       for ($i = 1; $i <= $num_pairs; $i++) {
         $mime_type = array_shift($facets);
         $count = array_shift($facets);
@@ -93,4 +95,3 @@ function preservation_reports_get_mimetypes() {
 
     return $output;
 }
-
