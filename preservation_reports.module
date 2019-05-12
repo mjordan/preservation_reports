@@ -1,26 +1,6 @@
 <?php
 
 /**
-* Implements hook_theme().
-*/
-function preservation_reports_theme($existing, $type, $theme, $path) {
-  return [
-    'preservation_reports_chart' => [
-      'variables' => ['chart' => NULL, 'pieheading' => NULL, 'lineheading' => NULL],
-    ],
-  ];
-}
-
-/**
-* Default preprocessor function for the preservation_report theme hook.
-*/
-function template_preprocess_preservation_reports_chart(&$variables) {
-  $variables['attributes'] = [
-    'id' => ['preservation_reports_charts'],
-  ];
-}
-
-/**
 * Implements hook_page_attachments().
 */
 function preservation_reports_page_attachments(array &$attachments) {
