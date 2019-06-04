@@ -1,0 +1,8 @@
+name: 'Preservation Reports: Preservation Master Mime Types'
+description: "Provides a report on the Mime Types of Preservation Master files managed by Islandora."
+type: module
+package: islandora
+core: 8.x
+dependencies:
+  - preservation_reports
+  - search_api

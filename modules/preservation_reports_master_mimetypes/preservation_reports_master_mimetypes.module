@@ -1,0 +1,19 @@
+<?php
+
+/**
+* Implements hook_page_attachments().
+*/
+function preservation_reports_master_mimetypes_page_attachments(array &$attachments) {
+  if (\Drupal::routeMatch()->getRouteName() == 'preservation_reports.reports') {
+    // For now we use dummy data to render the sample pie chart.
+    $labels = array('image/tiff', 'video/mpeg', 'audio/mpeg');
+    $dataset = new StdClass();
+    $dataset->data = array(60, 20, 30);
+    $dataset->backgroundColor = array('rgba(255, 99, 132)', 'rgba(54, 162, 235)', 'rgba(255, 206, 86)');
+    $pie_chart_data = array(
+      'labels' => $labels,
+      'datasets' =>  array($dataset),
+    );
+    $attachments['#attached']['drupalSettings']['preservation_reports']['piechart_data'] = $pie_chart_data;
+  }
+}
