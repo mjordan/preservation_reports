@@ -1,3 +1,5 @@
+> Note: This module is no longer being maintained. The charts have been integrated into [Media Formats Reports](https://github.com/mjordan/media_formats_reports) and [Islandora Riprap](https://github.com/mjordan/islandora_riprap).
+
 # Preservation Reports
 
 ## Introduction
